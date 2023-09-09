@@ -48,3 +48,6 @@ curl -X POST "http://localhost:8888/send" \
          "chatName":"COMMON"
         }'
 ```
+
+# Plugin
+By web hooks you may write plugins for Katya. See exmample in "plugins" folder.
