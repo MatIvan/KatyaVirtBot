@@ -12,11 +12,19 @@ const props = require('../props');
 const users = require(props.dbpath + 'users.json');
 
 /**
+ * @returns {User[]}
+ */
+function getAll() {
+    return [...users];
+}
+
+
+/**
  * @param {string} token 
  * @returns {User | undefined}
  */
 function getByToken(token) {
-    return users.find(user => user.token === token);
+    return getAll().find(user => user.token === token);
 }
 
 module.exports = {

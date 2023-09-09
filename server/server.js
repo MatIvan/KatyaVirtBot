@@ -2,13 +2,13 @@
 const Props = require('../props');
 const express = require('express');
 
-const webhookFilter = require('./webhook/webhook-filter');
+const TokenFilter = require('./token-filter');
 const webhookRouter = require('./webhook/webhook-router');
 const restErrorHandler = require('./rest-error').restErrorHandler;
 
 const app = express();
 app.use(express.json());
-app.use('/webhook*', webhookFilter);
+app.use('/*', TokenFilter);
 app.use('/webhook', webhookRouter);
 app.use(restErrorHandler);
 

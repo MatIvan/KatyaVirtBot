@@ -26,6 +26,12 @@ module.exports.getAll = asyncHandler(async (req, res, next) => {
 module.exports.add = asyncHandler(async (req, res, next) => {
     const user = getUser(req);
     const webhook = Validator.validWebhook(req.body, user);
+    if (!webhook.condition.caseSensitive) {
+        const upperContains = webhook.condition.contains?.map(txt => txt.toUpperCase());
+        const upperStartWith = webhook.condition.startWith?.map(txt => txt.toUpperCase());
+        webhook.condition.contains = upperContains;
+        webhook.condition.startWith = upperStartWith;
+    }
     res.json(DB.webhooks.add(webhook));
 });
 

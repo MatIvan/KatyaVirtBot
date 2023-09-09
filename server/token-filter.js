@@ -1,7 +1,7 @@
 //@ts-check
 
-const RestError = require('../rest-error').RestError;
-const DB = require('../../data-base/database');
+const RestError = require('./rest-error').RestError;
+const DB = require('../data-base/database');
 
 /**
  * @typedef {import("express").RequestHandler} RequestHandler

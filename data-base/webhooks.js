@@ -1,15 +1,14 @@
 //@ts-check
 
 /**
- * @typedef {'COMMON'} Chat
+ * @typedef {import("./chats").Chat} Chat
  */
-const CHAT_TYPES = ['COMMON'];
 
 /**
  * @typedef {object} Condition
- * @property {Chat} chat
+ * @property {string} chatName
  * @property {string[] | undefined} contains 
- * @property {string | undefined} startWith
+ * @property {string[] | undefined} startWith
  * @property {boolean} caseSensitive
  */
 
@@ -28,9 +27,9 @@ const WEBHOOKS = [
         userId: 0,
         url: "http://localhost:11001/",
         condition: {
-            chat: "COMMON",
+            chatName: "COMMON",
             contains: ["DEMO"],
-            startWith: "/DEMO",
+            startWith: ["/DEMO"],
             caseSensitive: true
         }
     }
@@ -51,21 +50,30 @@ function add(webhook) {
 
 /**
  * @param {number} userId
+ * @returns {WebHook[]}
  */
 function getByUserId(userId) {
-    return WEBHOOKS.filter(h => h.userId === userId);
+    return getAll().filter(h => h.userId === userId);
 }
 
 /**
  * @param {number} hookId
+ * @returns {WebHook | undefined}
  */
 function getById(hookId) {
-    return WEBHOOKS.find(h => h.id === hookId);
+    return getAll().find(h => h.id === hookId);
+}
+
+/**
+ * @returns {WebHook[]}
+ */
+function getAll() {
+    return [...WEBHOOKS];
 }
 
 module.exports = {
     add,
     getByUserId,
     getById,
-    CHAT_TYPES
+    getAll
 }

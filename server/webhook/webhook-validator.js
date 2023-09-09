@@ -1,7 +1,7 @@
 //@ts-check
 
-const { CHAT_TYPES } = require('../../data-base/webhooks');
 const { RestError } = require('../rest-error');
+const { chats } = require('../../data-base/database');
 
 /**
  * @typedef {import('../../data-base/webhooks').WebHook} WebHook
@@ -48,11 +48,11 @@ function validCondition(condition) {
     }
     const contains = validContains(condition['contains']);
     const startWith = validStartWith(condition['startWith']);
-    if(!contains && !startWith){
+    if (!contains && !startWith) {
         throw new RestError('Require one of parameters: "contains" or "startWith" (or both).', 400);
     }
     return {
-        chat: validChat(condition['chat']),
+        chatName: validChat(condition['chatName']),
         contains,
         startWith,
         caseSensitive: validCaseSensitive(condition['caseSensitive']),
@@ -61,17 +61,16 @@ function validCondition(condition) {
 
 /**
  * @param {any} chat
- * @returns {Chat}
+ * @returns {string}
  */
 function validChat(chat) {
     if (typeof chat !== 'string') {
-        throw new RestError('The "condition.chat" parameter is missing or is not a string.', 400);
+        throw new RestError('The "condition.chatName" parameter is missing or is not a string.', 400);
     }
-    /**@type {Chat} */
-    // @ts-ignore
     const upperChart = chat.toUpperCase();
-    if (!CHAT_TYPES.includes(upperChart)) {
-        throw new RestError('The value of parameter "condition.chat" is not supported. Use one of: ' + CHAT_TYPES, 400);
+    const availableChats = chats.getNames();
+    if (!availableChats.includes(upperChart)) {
+        throw new RestError('The value of parameter "condition.chatName" is not supported. Use one of: ' + availableChats, 400);
     }
     return upperChart;
 }
@@ -97,16 +96,21 @@ function validContains(contains) {
 
 /**
  * @param {any} startWith
- * @returns {string | undefined}
+ * @returns {string[] | undefined}
  */
 function validStartWith(startWith) {
     if (typeof startWith === 'undefined') {
         return undefined;
     }
-    if (typeof startWith !== 'string') {
-        throw new RestError('The "condition.startWith" parameter is not a string.', 400);
+    if (!Array.isArray(startWith)) {
+        throw new RestError('The "condition.startWith" parameter is missing or is not a string[].', 400);
     }
-    return startWith;
+    return startWith.map(str => {
+        if (typeof str !== 'string') {
+            throw new RestError('The "condition.startWith" array can contain only strings.', 400);
+        }
+        return str;
+    })
 }
 
 /**

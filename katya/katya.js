@@ -4,6 +4,11 @@ const Props = require('../props');
 const TelegramBot = require('node-telegram-bot-api');
 const WebHookService = require('../service/webhook-service');
 
+/**
+ * @typedef {TelegramBot.Message} TelegaMessage
+ * @typedef {TelegramBot.Metadata} TelegaMetadata
+ */
+
 /** @type {TelegramBot} */
 let bot;
 
