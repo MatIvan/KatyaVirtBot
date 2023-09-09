@@ -23,11 +23,20 @@ function start() {
  */
 function onMessage(msg, metadata) {
     const { username } = msg.chat;
-    console.debug(msg, metadata);
+    //console.debug(msg, metadata);
     console.log(username + " : " + msg.text);
     WebHookService.onMessage(msg);
 }
 
+/**
+ * @param {TelegramBot.ChatId} chatId
+ * @param {string} text
+ */
+function send(chatId, text) {
+    bot.sendMessage(chatId, text);
+}
+
 module.exports = {
-    start
+    start,
+    send
 }
