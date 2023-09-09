@@ -1,5 +1,6 @@
 version: "2"
 services:
+
   katya:
     image: "node:18"
     user: "node"
@@ -11,6 +12,15 @@ services:
     expose:
       - "8888"
     restart: always
-    command: 
-      bash -c "npm install
-      && node katya-virt-bot.js"
+    command: "node katya-virt-bot.js"
+
+  name-plugin:
+    image: "node:18"
+    user: "node"
+    working_dir: /home/node/app
+    volumes:
+      - ./plugins/name-reaction:/home/node/app
+    expose:
+      - "11001"
+    restart: always
+    command: "node name-reaction.js"
