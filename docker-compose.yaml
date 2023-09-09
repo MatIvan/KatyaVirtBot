@@ -1,0 +1,13 @@
+version: "2"
+services:
+  katya:
+    image: "node:18"
+    user: "node"
+    working_dir: /home/node/app
+    environment:
+      - PROFILE=prod
+    volumes:
+      - ./:/home/node/app
+    expose:
+      - "8888"
+    command: "node katya-virt-bot.js"
