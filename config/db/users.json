@@ -1,9 +1,11 @@
 [
     {
+        "id": 0,
         "name": "admin",
         "token": "DEVTOKEN"
     },
     {
+        "id": 1,
         "name": "demo",
         "token": "DEMOTOKEN"
     }

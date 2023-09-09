@@ -3,6 +3,7 @@ const props = require('../props');
 
 /**
  * @typedef {object} User
+ * @property {number} id
  * @property {string} name
  * @property {string} token
  */

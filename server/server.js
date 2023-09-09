@@ -9,7 +9,7 @@ const restErrorHandler = require('./rest-error').restErrorHandler;
 const app = express();
 app.use(express.json());
 app.use('/webhook*', webhookFilter);
-app.use('/webhook*', webhookRouter);
+app.use('/webhook', webhookRouter);
 app.use(restErrorHandler);
 
 function start() {

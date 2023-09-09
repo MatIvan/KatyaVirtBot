@@ -1,15 +1,35 @@
 //@ts-check
+const asyncHandler = require('express-async-handler');
+const DB = require('../../data-base/database');
+const Validator = require('./webhook-validator');
 
-const asyncHandler = require("express-async-handler");
+
+/**
+ * @typedef {import('../../data-base/users').User} User
+ * @typedef {import("express").Request} Request
+ */
+
+/**
+ * @param {Request} req
+ * @returns {User}
+ */
+function getUser(req) {
+    return req['user'];
+}
 
 module.exports.getAll = asyncHandler(async (req, res, next) => {
-    res.send("NOT IMPLEMENTED: Author list");
+    console.log("getAll");
+    const user = getUser(req);
+    res.json(DB.webhooks.getByUserId(user.id));
 });
 
 module.exports.add = asyncHandler(async (req, res, next) => {
-    res.send("NOT IMPLEMENTED: Author list");
+    const user = getUser(req);
+    const webhook = Validator.validWebhook(req.body, user);
+    res.json(DB.webhooks.add(webhook));
 });
 
 module.exports.getById = asyncHandler(async (req, res, next) => {
-    res.send("NOT IMPLEMENTED: Author list");
+    const id = Validator.validId(req.params.id);
+    res.json(DB.webhooks.getById(id));
 });
