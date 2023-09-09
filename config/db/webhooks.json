@@ -2,7 +2,7 @@
     {
         "id": 0,
         "userId": 0,
-        "url": "http://localhost:11001/",
+        "url": "http://name-plugin:11001/",
         "condition": {
             "chatName": "COMMON",
             "contains": ["DEMO"],

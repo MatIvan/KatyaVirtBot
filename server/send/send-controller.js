@@ -30,7 +30,7 @@ function getUser(req) {
 function send(sendRequest) {
     const chat = chats.getByName(sendRequest.chatName);
     if (!chat) {
-        console.log("Uncnown chat: " + sendRequest.chatName);
+        console.log("Unknown chat: " + sendRequest.chatName);
         return;
     }
     sendToKatya(chat.id, sendRequest.message);
