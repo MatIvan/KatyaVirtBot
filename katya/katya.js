@@ -2,6 +2,7 @@
 const Props = require('../props');
 
 const TelegramBot = require('node-telegram-bot-api');
+const WebHookService = require('../service/webhook-service');
 
 /** @type {TelegramBot} */
 let bot;
@@ -12,9 +13,8 @@ function start() {
 }
 
 /**
- * 
- * @param {TelegramBot.Message} msg 
- * @param { TelegramBot.Metadata}metadata
+ * @param {TelegaMessage} msg 
+ * @param {TelegaMetadata} metadata
  */
 function onMessage(msg, metadata) {
     const { id, username } = msg.chat;
@@ -26,8 +26,7 @@ function onMessage(msg, metadata) {
     if (hasKatyaName(msg.text)) {
         bot.sendMessage(id, 'Я Катя!');
     }
-    //const chatId = msg.chat.id;
-    //bot.sendMessage(chatId, 'Received your message');
+    WebHookService.onMessage(msg);
 }
 
 const KATYA_NAMES = ["КАТЯ", "КАТЕ", "КАТЮ", "КАТЕЙ"]

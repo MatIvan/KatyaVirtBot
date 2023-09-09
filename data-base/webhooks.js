@@ -8,8 +8,8 @@ const CHAT_TYPES = ['COMMON'];
 /**
  * @typedef {object} Condition
  * @property {Chat} chat
- * @property {string[]} contains
- * @property {string} startWith
+ * @property {string[] | undefined} contains 
+ * @property {string | undefined} startWith
  * @property {boolean} caseSensitive
  */
 

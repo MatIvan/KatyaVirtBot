@@ -46,10 +46,15 @@ function validCondition(condition) {
     if (typeof condition !== 'object') {
         throw new RestError('The "condition" parameter is missing or is not a object.', 400);
     }
+    const contains = validContains(condition['contains']);
+    const startWith = validStartWith(condition['startWith']);
+    if(!contains && !startWith){
+        throw new RestError('Require one of parameters: "contains" or "startWith" (or both).', 400);
+    }
     return {
         chat: validChat(condition['chat']),
-        contains: validContains(condition['contains']),
-        startWith: validStartWith(condition['startWith']),
+        contains,
+        startWith,
         caseSensitive: validCaseSensitive(condition['caseSensitive']),
     }
 }
@@ -73,9 +78,12 @@ function validChat(chat) {
 
 /**
  * @param {any} contains
- * @returns {string[]}
+ * @returns {string[] | undefined}
  */
 function validContains(contains) {
+    if (typeof contains === 'undefined') {
+        return undefined;
+    }
     if (!Array.isArray(contains)) {
         throw new RestError('The "condition.contains" parameter is missing or is not a string[].', 400);
     }
@@ -89,11 +97,14 @@ function validContains(contains) {
 
 /**
  * @param {any} startWith
- * @returns {string}
+ * @returns {string | undefined}
  */
 function validStartWith(startWith) {
+    if (typeof startWith === 'undefined') {
+        return undefined;
+    }
     if (typeof startWith !== 'string') {
-        throw new RestError('The "condition.startWith" parameter is missing or is not a string.', 400);
+        throw new RestError('The "condition.startWith" parameter is not a string.', 400);
     }
     return startWith;
 }
@@ -103,8 +114,11 @@ function validStartWith(startWith) {
  * @returns {boolean}
  */
 function validCaseSensitive(caseSensitive) {
+    if (typeof caseSensitive === 'undefined') {
+        return false;
+    }
     if (typeof caseSensitive !== 'boolean') {
-        throw new RestError('The "condition.caseSensitive" parameter is missing or is not a boolean.', 400);
+        throw new RestError('The "condition.caseSensitive" parameter is not a boolean.', 400);
     }
     return caseSensitive;
 }
