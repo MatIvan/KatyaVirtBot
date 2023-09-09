@@ -1,0 +1,12 @@
+{
+  "name": "katyavirtbot",
+  "version": "1.0.0",
+  "description": "Telegram bot for my freands group.",
+  "author": "mativan",
+  "license": "ISC",
+  "main": "katya-virt-bot.js",
+  "devDependencies": {},
+  "dependencies": {
+    "node-telegram-bot-api": "^0.61.0"
+  }
+}
