@@ -22,9 +22,9 @@ function start() {
  * @param {TelegaMetadata} metadata
  */
 function onMessage(msg, metadata) {
-    const { username } = msg.chat;
+    const { username, title } = msg.chat;
     //console.debug(msg, metadata);
-    console.log(username + " : " + msg.text);
+    console.log((username || title) + " : " + msg.text);
     WebHookService.onMessage(msg);
 }
 
