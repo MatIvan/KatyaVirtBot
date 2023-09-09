@@ -24,7 +24,7 @@ curl -X POST "http://localhost:8888/webhook" \
          "condition":{
              "chat":"COMMON", 
              "contains":["OPA2"], 
-             "startWith":"OPA2", 
+             "startWith":["OPA2"], 
              "caseSensitive":true}
         }'
 ```
