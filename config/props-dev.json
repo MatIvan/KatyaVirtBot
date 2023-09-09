@@ -1,3 +1,5 @@
 {
-    "token": "DEVTOKEN"
+    "token": "DEVTOKEN",
+    "port": 8888,
+    "dbpath": "../config/db/"
 }

@@ -1,0 +1,10 @@
+[
+    {
+        "name": "admin",
+        "token": "DEVTOKEN"
+    },
+    {
+        "name": "demo",
+        "token": "DEMOTOKEN"
+    }
+]

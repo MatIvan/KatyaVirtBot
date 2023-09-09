@@ -6,6 +6,8 @@ const PROFILE = process.env.PROFILE || 'dev';
  * @typedef {object} Properties
  * @property {string} token
  * @property {string} profile
+ * @property {number} port
+ * @property {string} dbpath
  */
 
 /** @type {Properties} */
