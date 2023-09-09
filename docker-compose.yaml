@@ -10,4 +10,7 @@ services:
       - ./:/home/node/app
     expose:
       - "8888"
-    command: "node katya-virt-bot.js"
+    restart: always
+    command: 
+      bash -c "npm install
+      && node katya-virt-bot.js"
