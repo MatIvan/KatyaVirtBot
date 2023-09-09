@@ -1,4 +1,5 @@
 //@ts-check
+const props = require('../props');
 
 /**
  * @typedef {import("./chats").Chat} Chat
@@ -21,19 +22,7 @@
  */
 
 /** @type {WebHook[]} */
-const WEBHOOKS = [
-    {
-        id: 0,
-        userId: 0,
-        url: "http://localhost:11001/",
-        condition: {
-            chatName: "COMMON",
-            contains: ["DEMO"],
-            startWith: ["/DEMO"],
-            caseSensitive: true
-        }
-    }
-];
+const WEBHOOKS = require(props.dbpath + 'webhooks.json');;
 
 /**
  * @param {WebHook} webhook

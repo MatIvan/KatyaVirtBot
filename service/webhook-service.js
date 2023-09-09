@@ -27,6 +27,7 @@ function send(hook, msg) {
         message: msg.text
     }
     fetch(hook.url, {
+        method: "POST",
         body: JSON.stringify(body),
         headers: { 'Content-Type': 'application/json' },
     })
@@ -34,7 +35,7 @@ function send(hook, msg) {
             console.log(`Sended. hookId=${hook.id} status=${resp.status}`);
         })
         .catch(e => {
-            console.log(`Send error. hookId=${hook.id} error=${e.message}`);
+            console.log(`Sending error. hookId=${hook.id} error=${e}`);
         })
 }
 /**

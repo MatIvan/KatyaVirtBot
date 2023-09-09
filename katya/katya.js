@@ -22,30 +22,10 @@ function start() {
  * @param {TelegaMetadata} metadata
  */
 function onMessage(msg, metadata) {
-    const { id, username } = msg.chat;
+    const { username } = msg.chat;
     console.debug(msg, metadata);
     console.log(username + " : " + msg.text);
-    if (!msg.text) {
-        return;
-    }
-    if (hasKatyaName(msg.text)) {
-        bot.sendMessage(id, 'Я Катя!');
-    }
     WebHookService.onMessage(msg);
-}
-
-const KATYA_NAMES = ["КАТЯ", "КАТЕ", "КАТЮ", "КАТЕЙ"]
-/**
- * @param {string} txt 
- */
-function hasKatyaName(txt) {
-    const upperText = txt.toUpperCase();
-    for (const name of KATYA_NAMES) {
-        if (upperText.indexOf(name) > -1) {
-            return true;
-        }
-    }
-    return false;
 }
 
 module.exports = {

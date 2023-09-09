@@ -1,0 +1,13 @@
+[
+    {
+        "id": 0,
+        "userId": 0,
+        "url": "http://localhost:11001/",
+        "condition": {
+            "chatName": "COMMON",
+            "contains": ["DEMO"],
+            "startWith": ["/DEMO"],
+            "caseSensitive": true
+        }
+    }
+]

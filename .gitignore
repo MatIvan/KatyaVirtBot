@@ -1,3 +1,4 @@
 config/props-prod.json
+config/db-prod
 node_modules
 package-lock.json
