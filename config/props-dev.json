@@ -1,5 +1,6 @@
 {
     "token": "DEVTOKEN",
     "port": 8888,
-    "dbpath": "../config/db/"
+    "dbpath": "../config/db/",
+    "useCors": true
 }

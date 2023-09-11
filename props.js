@@ -8,6 +8,7 @@ const PROFILE = process.env.PROFILE || 'dev';
  * @property {string} profile
  * @property {number} port
  * @property {string} dbpath
+ * @property {boolean} useCors
  */
 
 /** @type {Properties} */
