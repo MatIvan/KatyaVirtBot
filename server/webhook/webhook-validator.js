@@ -18,10 +18,25 @@ const { chats } = require('../../data-base/database');
 function validWebhook(body, user) {
     return {
         id: -1,
+        name: validName(body['name']),
         userId: user.id,
         url: validUrl(body['url']),
         condition: validCondition(body['condition'])
     }
+}
+
+/**
+ * @param {any} name
+ * @returns {string}
+ */
+function validName(name) {
+    if (typeof name !== 'string') {
+        throw new RestError('The "name" parameter is missing or is not a string.', 400);
+    }
+    if (name.length < 3) {
+        throw new RestError('The "name" parameter length must be 3 symbols minimum.', 400);
+    }
+    return name;
 }
 
 /**

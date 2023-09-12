@@ -1,6 +1,7 @@
 [
     {
         "id": 0,
+        "name": "Demo",
         "userId": 0,
         "url": "http://name-plugin:11001/",
         "condition": {
