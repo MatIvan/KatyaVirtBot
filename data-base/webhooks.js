@@ -25,6 +25,8 @@ const props = require('../props');
 /** @type {WebHook[]} */
 const WEBHOOKS = require(props.dbpath + 'webhooks.json');;
 
+let lastId = 1000;
+
 /**
  * @param {WebHook} webhook
  * @returns {WebHook}
@@ -32,7 +34,7 @@ const WEBHOOKS = require(props.dbpath + 'webhooks.json');;
 function add(webhook) {
     const newWebhook = {
         ...webhook,
-        id: WEBHOOKS.length
+        id: lastId++
     }
     WEBHOOKS.push(newWebhook);
     return newWebhook;
@@ -61,9 +63,36 @@ function getAll() {
     return [...WEBHOOKS];
 }
 
+/**
+ * @param {number} id
+ * @param {WebHook} webhook
+ * @returns {WebHook}
+ */
+function save(id, webhook) {
+    const newWebhook = {
+        ...webhook,
+        id
+    }
+    remove(id);
+    WEBHOOKS.push(newWebhook);
+    return newWebhook;
+}
+
+/**
+ * @param {number} id
+ */
+function remove(id) {
+    const index = WEBHOOKS.findIndex(h => h.id === id);
+    if (index > -1) {
+        WEBHOOKS.splice(index, 1);
+    }
+}
+
 module.exports = {
     add,
     getByUserId,
     getById,
-    getAll
+    getAll,
+    save,
+    remove
 }

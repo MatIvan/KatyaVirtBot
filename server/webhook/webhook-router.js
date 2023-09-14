@@ -5,6 +5,7 @@ const controller = require('./webhook-controller');
 
 router.get("/", controller.getAll);
 router.post("/", controller.add);
-router.get("/:id", controller.getById);
+router.put("/:id", controller.save);
+router.delete("/:id", controller.delete);
 
 module.exports = router;
