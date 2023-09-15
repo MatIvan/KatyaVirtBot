@@ -1,5 +1,7 @@
 //@ts-check
+const fs = require('fs');
 const props = require('../props');
+const FILE = props.dbpath + 'webhooks.json';
 
 /**
  * @typedef {import("./chats").Chat} Chat
@@ -22,9 +24,18 @@ const props = require('../props');
  * @property {Condition} condition
  */
 
-/** @type {WebHook[]} */
-const WEBHOOKS = require(props.dbpath + 'webhooks.json');;
+function writeDB() {
+    try {
+        const data = JSON.stringify(WEBHOOKS, null, 4)
+        fs.writeFileSync(FILE, data, 'utf8')
+        console.log('File is written successfully: ' + FILE)
+    } catch (err) {
+        console.log('Error writing file: ' + err)
+    }
+}
 
+/** @type {WebHook[]} */
+const WEBHOOKS = require(FILE);
 let lastId = 1000;
 
 /**
@@ -37,6 +48,7 @@ function add(webhook) {
         id: lastId++
     }
     WEBHOOKS.push(newWebhook);
+    writeDB();
     return newWebhook;
 }
 
@@ -75,6 +87,7 @@ function save(id, webhook) {
     }
     remove(id);
     WEBHOOKS.push(newWebhook);
+    writeDB();
     return newWebhook;
 }
 
@@ -86,6 +99,7 @@ function remove(id) {
     if (index > -1) {
         WEBHOOKS.splice(index, 1);
     }
+    writeDB();
 }
 
 module.exports = {

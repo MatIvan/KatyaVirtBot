@@ -1,5 +1,6 @@
 //@ts-check
 const props = require('../props');
+const FILE = props.dbpath + 'chats.json';
 
 /**
  * @typedef {object} Chat
@@ -8,7 +9,7 @@ const props = require('../props');
  */
 
 /** @type {Chat[]} */
-const chats = require(props.dbpath + 'chats.json');
+const chats = require(FILE);
 
 /**
  * @returns {Chat[]}
