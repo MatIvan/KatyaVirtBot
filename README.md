@@ -21,6 +21,7 @@ curl -X POST "http://localhost:8888/webhook" \
     -H "Content-Type: application/json" \
     -d '{
          "url":"http://demourl", 
+         "isPutToQueue": false
          "condition":{
              "chat":"COMMON", 
              "contains":["OPA2"], 
@@ -47,6 +48,15 @@ curl -X POST "http://localhost:8888/send" \
          "message":"hello world", 
          "chatName":"COMMON"
         }'
+```
+
+# Get messages from queue
+To get saved messages from server, make GET request:
+* GET "/get" - get messages
+
+## Example
+```bash
+curl "http://localhost:8888/get" -H "Authorization: Token DEVTOKEN"
 ```
 
 # Plugin

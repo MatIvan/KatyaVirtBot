@@ -21,6 +21,7 @@ function validWebhook(body, user) {
         name: validName(body['name']),
         userId: user.id,
         url: validUrl(body['url']),
+        isPutToQueue: validIsPutToQueue(body['isPutToQueue']),
         condition: validCondition(body['condition'])
     }
 }
@@ -140,6 +141,20 @@ function validCaseSensitive(caseSensitive) {
         throw new RestError('The "condition.caseSensitive" parameter is not a boolean.', 400);
     }
     return caseSensitive;
+}
+
+/**
+ * @param {any} isPutToQueue
+ * @returns {boolean}
+ */
+function validIsPutToQueue(isPutToQueue) {
+    if (typeof isPutToQueue === 'undefined') {
+        return false;
+    }
+    if (typeof isPutToQueue !== 'boolean') {
+        throw new RestError('The "isPutToQueue" parameter is not a boolean.', 400);
+    }
+    return isPutToQueue;
 }
 
 /**

@@ -3,10 +3,13 @@ const Props = require('../props');
 
 const TelegramBot = require('node-telegram-bot-api');
 const WebHookService = require('../service/webhook-service');
+const QueueService = require('../service/queue-service');
 
 /**
  * @typedef {TelegramBot.Message} TelegaMessage
  * @typedef {TelegramBot.Metadata} TelegaMetadata
+ * @typedef {import('../data-base/users').User} User
+ * @typedef {import('../service/queue-service').QueueMessage} QueueMessage
  */
 
 /** @type {TelegramBot} */
@@ -26,6 +29,7 @@ function onMessage(msg, metadata) {
     //console.debug(msg, metadata);
     console.log((username || title) + " : " + msg.text);
     WebHookService.onMessage(msg);
+    QueueService.onMessage(msg);
 }
 
 /**
@@ -36,7 +40,16 @@ function send(chatId, text) {
     bot.sendMessage(chatId, text);
 }
 
+/**
+ * @param {User} user 
+ * @return {QueueMessage[]}
+ */
+function getForUser(user) {
+    return QueueService.getForUser(user);
+}
+
 module.exports = {
     start,
-    send
+    send,
+    getForUser
 }

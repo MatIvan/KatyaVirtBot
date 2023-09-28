@@ -21,6 +21,7 @@ const FILE = props.dbpath + 'webhooks.json';
  * @property {string} name
  * @property {number} userId
  * @property {string} url
+ * @property {boolean} isPutToQueue
  * @property {Condition} condition
  */
 

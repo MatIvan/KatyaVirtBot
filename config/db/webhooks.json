@@ -4,6 +4,7 @@
         "name": "Demo",
         "userId": 0,
         "url": "http://name-plugin:11001/",
+        "isPutToQueue": false,
         "condition": {
             "chatName": "COMMON",
             "contains": ["DEMO"],
