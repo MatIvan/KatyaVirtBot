@@ -1,5 +1,5 @@
 const port = 11001;
-const katyaServerUrl = 'http://katya:8888/send';
+const katyaServerUrl = 'http://katya:11000/send';
 const userToken = 'DEMOTOKEN';
 
 const express = require('express');

@@ -1,6 +1,15 @@
 version: "2"
 services:
 
+  nginx:
+    image: nginx
+    volumes:
+      - ./nginx/config:/etc/nginx
+      - ./nginx/logs:/var/log/nginx
+      - ./web:/var/www/katya/web
+    ports:
+      - 80:80
+
   katya:
     image: "node:18"
     user: "node"
@@ -8,9 +17,11 @@ services:
     environment:
       - PROFILE=prod
     volumes:
-      - ./:/home/node/app
+      - ./bot/bin:/home/node/app
+      - ./bot/config:/home/node/app/config
+      - ./bot/db:/var/katya
     expose:
-      - "8888"
+      - "11000"
     restart: always
     command: "node katya-virt-bot.js"
 
@@ -19,8 +30,9 @@ services:
     user: "node"
     working_dir: /home/node/app
     volumes:
-      - ./plugins/name-reaction:/home/node/app
+      - ./plugin-def/bin:/home/node/app
     expose:
       - "11001"
     restart: always
     command: "node name-reaction.js"
+    
