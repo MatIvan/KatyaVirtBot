@@ -38,9 +38,9 @@ function onMessage(msg) {
  */
 function putToQueue(hook, message) {
     const { userId } = hook;
-    const queue = map.get(userId);
+    let queue = map.get(userId);
     if (!queue) {
-        return;
+        queue=[];
     }
     /** @type {QueueMessage} */
     const newMsg = { hook, message };
