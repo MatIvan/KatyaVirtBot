@@ -4,6 +4,7 @@ const Props = require('../props');
 const TelegramBot = require('node-telegram-bot-api');
 const WebHookService = require('../service/webhook-service');
 const QueueService = require('../service/queue-service');
+const AdminService = require('./admin-service');
 
 /**
  * @typedef {TelegramBot.Message} TelegaMessage
@@ -21,13 +22,47 @@ function start() {
 }
 
 /**
+ * @param {string} text 
+ * @returns {string}
+ */
+function getCommand(text) {
+    let wordEndIndex = text.indexOf(' ');
+    if (wordEndIndex < 0) {
+        wordEndIndex = text.length;
+    }
+    return text.substring(1, wordEndIndex);
+}
+
+/**
+ * @param {TelegaMessage} msg 
+ * @returns {boolean} true - if needs to stop propagnation
+ */
+function process(msg) {
+    const { text } = msg;
+    if (!text) {
+        return false;
+    }
+    if (text.charAt(0) !== '/') {
+        return false;
+    }
+    const cmd = getCommand(text);
+    if (typeof AdminService[cmd] !== "function") {
+        return false;
+    }
+    return AdminService[cmd](bot, msg);
+}
+
+/**
  * @param {TelegaMessage} msg 
  * @param {TelegaMetadata} metadata
  */
 function onMessage(msg, metadata) {
-    const { username, title } = msg.chat;
+    const { username, title, id } = msg.chat;
     //console.debug(msg, metadata);
-    console.log((username || title) + " : " + msg.text);
+    console.log('chat ' + id + ' ' + (username || title) + " : " + msg.text);
+    if (process(msg)) {
+        return;
+    }
     WebHookService.onMessage(msg);
     QueueService.onMessage(msg);
 }
