@@ -15,6 +15,14 @@ app.listen(port, function () {
     console.info('Server start on port ' + port);
 });
 
+setInterval(()=>{
+    const currentdate = new Date();
+    if(currentdate.getHours()===7 && currentdate.getMinutes()===0){
+        getCurrentWeather("COMMON")
+    };
+
+},1000*60)
+
 function onHook(request) {
     const { hook } = request;
     console.info('onHook ' + hook);
