@@ -35,4 +35,24 @@ services:
       - "11001"
     restart: always
     command: "node name-reaction.js"
-    
+
+  weather-plugin:
+    image: "node:18"
+    user: "node"
+    working_dir: /home/node/app
+    volumes:
+      - ./plugin-weather/bin:/home/node/app
+    expose:
+      - "11002"
+    restart: always
+    command: "node weather.js"
+
+  weather:
+    image: openjdk:17
+    working_dir: /app
+    volumes:
+      - ./weather:/app
+    expose:
+      - "11100"
+    restart: always
+    command: "java -jar weather-0.0.1-SNAPSHOT.jar"
