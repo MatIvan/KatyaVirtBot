@@ -1,6 +1,6 @@
 const port = 11001;
 const katyaServerUrl = 'http://katya:11000/send';
-const userToken = 'DEMOTOKEN';
+const userToken = 'GUEST_TOKEN';
 
 const express = require('express');
 const app = express();
