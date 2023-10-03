@@ -1,4 +1,6 @@
-const PROPS = 'properties.json';
+console.log("Weather plugin starting...");
+const PROPS = require('./properties.json');
+console.log(PROPS);
 
 const express = require('express');
 const app = express();
@@ -30,7 +32,7 @@ setInterval(() => {
 
 function onHook(request) {
     const { hook } = request;
-    console.info('onHook ' + hook);
+    console.info('onHook ', hook);
     getCurrentWeather(hook.condition.chatName);
 }
 
