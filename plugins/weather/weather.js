@@ -15,9 +15,11 @@ app.listen(PROPS.port, function () {
 setInterval(() => {
     const currentdate = new Date();
     if (currentdate.getHours() === 7 && currentdate.getMinutes() === 0) {
+        console.log("Alarm: " + currentdate);
         fetch(PROPS.checkDayUrl)
             .then(resp => resp.text())
             .then(text => {
+                console.log("Day type: " + (text === "0" ? "work" : "non-work"));
                 if (text === "0") {//work day
                     getCurrentWeather("COMMON")
                 }
