@@ -37,15 +37,12 @@ services:
     command: "node name-reaction.js"
 
   weather-plugin:
-    image: "node:18"
-    user: "node"
-    working_dir: /home/node/app
+    build: ./plugin-weather
     volumes:
       - ./plugin-weather/bin:/home/node/app
     expose:
       - "11002"
     restart: always
-    command: "node weather.js"
 
   weather:
     image: openjdk:17
