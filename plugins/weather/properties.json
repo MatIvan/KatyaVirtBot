@@ -1,0 +1,7 @@
+{
+    "port": 11002,
+    "katyaServerUrl": "http://localhost:8888/send",
+    "weatherServerUrl": "http://localhost:8080/v1/text/now?location=Moscow",
+    "userToken": "GUEST_TOKEN",
+    "checkDayUrl": "http://isdayoff.ru/today"
+}

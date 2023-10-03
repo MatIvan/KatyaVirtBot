@@ -1,8 +1,4 @@
-const port = 11002;
-const katyaServerUrl = 'http://localhost:8888/send';
-const weatherServerUrl = 'http://localhost:8080/v1/text/now?location=Moscow';
-const userToken = 'GUEST_TOKEN';
-const checkDayUrl = 'http://isdayoff.ru/today';
+const PROPS = 'properties.json';
 
 const express = require('express');
 const app = express();
@@ -12,14 +8,14 @@ app.post("/", (req, resp) => {
     resp.end();
 })
 
-app.listen(port, function () {
-    console.info('Server start on port ' + port);
+app.listen(PROPS.port, function () {
+    console.info('Server start on port ' + PROPS.port);
 });
 
 setInterval(() => {
     const currentdate = new Date();
     if (currentdate.getHours() === 7 && currentdate.getMinutes() === 0) {
-        fetch(checkDayUrl)
+        fetch(PROPS.checkDayUrl)
             .then(resp => resp.text())
             .then(text => {
                 if (text === "0") {//work day
@@ -37,7 +33,7 @@ function onHook(request) {
 }
 
 function getCurrentWeather(chatName) {
-    return fetch(weatherServerUrl)
+    return fetch(PROPS.weatherServerUrl)
         .then(resp => resp.text())
         .then(text => say(chatName, text))
         .catch(err => console.error(err));
@@ -49,12 +45,12 @@ function say(chatName, text) {
         chatName: chatName,
         message: text
     }
-    return fetch(katyaServerUrl, {
+    return fetch(PROPS.katyaServerUrl, {
         method: "POST",
         body: JSON.stringify(body),
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Token ' + userToken
+            'Authorization': 'Token ' + PROPS.userToken
         },
     });
 }
