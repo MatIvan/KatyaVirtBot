@@ -37,7 +37,8 @@ function writeDB() {
 
 /** @type {WebHook[]} */
 const WEBHOOKS = require(FILE);
-let lastId = Math.max(...WEBHOOKS.map(v=>v.id));
+let lastId = Math.max(...WEBHOOKS.map(v => v.id));
+console.log("Loaded WEBHOOKS. length=" + WEBHOOKS.length + "; lastId=" + lastId);
 
 /**
  * @param {WebHook} webhook
