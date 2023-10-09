@@ -10,10 +10,14 @@ const { chats } = require('../../data-base/database');
  */
 
 /**
+ * @typedef {'TEXT' | 'MARKDOWN' | undefined} SendType
+ */
+
+/**
  * @typedef {object} SendRequest
  * @property {string} chatName
  * @property {string} message
- * @property {'TEXT' | 'MARKDOWN' | undefined} type
+ * @property {SendType} type
  */
 
 /**

@@ -13,7 +13,8 @@ const { chats } = require('../../data-base/database');
 function validSendRequest(body) {
     return {
         chatName: validChatName(body['chatName']),
-        message: validMessage(body['message'])
+        message: validMessage(body['message']),
+        type: validType(body['type']),
     }
 }
 
@@ -42,6 +43,25 @@ function validMessage(message) {
         throw new RestError('The "message" parameter is missing or is not a string.', 400);
     }
     return message;
+}
+
+const TYPES = ['TEXT', 'MARKDOWN'];
+/**
+ * @param {any} type
+ * @returns {import("./send-controller").SendType}
+ */
+function validType(type) {
+    if (typeof type === 'undefined') {
+        return 'TEXT';
+    }
+    if (typeof type !== 'string') {
+        throw new RestError('The "type" parameter is not a string.', 400);
+    }
+    if (TYPES.indexOf(type.toUpperCase()) < 0) {
+        throw new RestError('The value of parameter "type" is not supported. Use one of: ' + TYPES, 400);
+    }
+    // @ts-ignore
+    return type;
 }
 
 module.exports = {
