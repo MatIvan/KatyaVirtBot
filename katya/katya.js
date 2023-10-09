@@ -71,8 +71,18 @@ function onMessage(msg, metadata) {
  * @param {TelegramBot.ChatId} chatId
  * @param {string} text
  */
-function send(chatId, text) {
+function sendText(chatId, text) {
     bot.sendMessage(chatId, text);
+}
+
+/**
+ * @param {TelegramBot.ChatId} chatId
+ * @param {string} text
+ */
+function sendMarkDown(chatId, text) {
+    bot.sendMessage(chatId, text, {
+        parse_mode: 'Markdown'
+    });
 }
 
 /**
@@ -85,6 +95,7 @@ function getForUser(user) {
 
 module.exports = {
     start,
-    send,
+    sendText,
+    sendMarkDown,
     getForUser
 }

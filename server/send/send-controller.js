@@ -1,7 +1,7 @@
 //@ts-check
 const asyncHandler = require('express-async-handler');
 const Validator = require('./send-validator');
-const sendToKatya = require('../../katya/katya').send;
+const Katya = require('../../katya/katya');
 const { chats } = require('../../data-base/database');
 
 /**
@@ -13,6 +13,7 @@ const { chats } = require('../../data-base/database');
  * @typedef {object} SendRequest
  * @property {string} chatName
  * @property {string} message
+ * @property {'TEXT' | 'MARKDOWN' | undefined} type
  */
 
 /**
@@ -28,12 +29,17 @@ function getUser(req) {
  * @param {SendRequest} sendRequest
  */
 function send(sendRequest) {
-    const chat = chats.getByName(sendRequest.chatName);
+    const { chatName, message, type } = sendRequest;
+    const chat = chats.getByName(chatName);
     if (!chat) {
-        console.log("Unknown chat: " + sendRequest.chatName);
+        console.log("Unknown chat: " + chatName);
         return;
     }
-    sendToKatya(chat.id, sendRequest.message);
+    if (type === 'MARKDOWN') {
+        Katya.sendMarkDown(chat.id, message);
+    } else {
+        Katya.sendText(chat.id, message);
+    }
 }
 
 module.exports.send = asyncHandler(async (req, res, next) => {

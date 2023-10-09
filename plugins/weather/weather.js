@@ -39,7 +39,7 @@ function onHook(request) {
 function getCurrentWeather(chatName) {
     return fetch(PROPS.weatherServerUrl)
         .then(resp => resp.text())
-        .then(text => say(chatName, text))
+        .then(text => say(chatName, '**Доброе утро!**  ' + text))
         .catch(err => console.error(err));
 }
 
