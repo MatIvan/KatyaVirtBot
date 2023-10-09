@@ -47,7 +47,8 @@ function say(chatName, text) {
     console.info("say:" + chatName, text);
     const body = {
         chatName: chatName,
-        message: text
+        message: text,
+        type: 'MARKDOWN'
     }
     return fetch(PROPS.katyaServerUrl, {
         method: "POST",
