@@ -11,6 +11,9 @@ const AdminService = require('./admin-service');
  * @typedef {TelegramBot.Metadata} TelegaMetadata
  * @typedef {import('../data-base/users').User} User
  * @typedef {import('../service/queue-service').QueueMessage} QueueMessage
+ * @typedef {import('../server/send/send-controller').SendType} SendType
+ * @typedef {TelegramBot.SendMessageOptions} TelegaMessageOptions
+ * @typedef {TelegramBot.ParseMode} TelegaParseMode
  */
 
 /** @type {TelegramBot} */
@@ -70,19 +73,37 @@ function onMessage(msg, metadata) {
 /**
  * @param {TelegramBot.ChatId} chatId
  * @param {string} text
+ * @param {SendType} type
+ * @param {boolean} webPagePreview
  */
-function sendText(chatId, text) {
-    bot.sendMessage(chatId, text);
+function sendText(chatId, text, type, webPagePreview) {
+    let messageOptions = getSendMessageOptions(type, webPagePreview);
+    bot.sendMessage(chatId, text, messageOptions);
 }
 
 /**
- * @param {TelegramBot.ChatId} chatId
- * @param {string} text
+ * @param {SendType} type
+ * @param {boolean} webPagePreview
+ * @returns {TelegaMessageOptions}
  */
-function sendMarkDown(chatId, text) {
-    bot.sendMessage(chatId, text, {
-        parse_mode: 'Markdown'
-    });
+function getSendMessageOptions(type, webPagePreview) {
+    return {
+        parse_mode: getMessageType(type),
+        disable_web_page_preview: webPagePreview
+    }
+}
+
+/**
+ * @param {SendType} type
+ * @returns {TelegaParseMode | undefined}
+ */
+function getMessageType(type) {
+    switch(type) {
+        case 'MARKDOWN':
+            return 'Markdown'
+        default:
+            return undefined;
+    }
 }
 
 /**
@@ -96,6 +117,5 @@ function getForUser(user) {
 module.exports = {
     start,
     sendText,
-    sendMarkDown,
     getForUser
 }

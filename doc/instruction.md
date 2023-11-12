@@ -46,9 +46,13 @@ curl -X POST "http://localhost:8888/send" \
     -H "Content-Type: application/json" \
     -d '{
          "message":"hello world", 
-         "chatName":"COMMON"
+         "chatName":"COMMON",
+         "type": "MARKDOWN",
+         "disableWebPagePreview": true
         }'
 ```
 , где
 * message - текст сообщения.
 * chatName - в какой чат писать.
+* type - режим форматирования текста (MARKDOWN или TEXT(без форматирования)) *(не обязательный параметр)*
+* disableWebPagePreview - отключить предпросмотр ссылок в сообщении *(не обязательный параметр)*

@@ -18,6 +18,7 @@ const { chats } = require('../../data-base/database');
  * @property {string} chatName
  * @property {string} message
  * @property {SendType} type
+ * @property {boolean} disableWebPagePreview
  */
 
 /**
@@ -33,17 +34,13 @@ function getUser(req) {
  * @param {SendRequest} sendRequest
  */
 function send(sendRequest) {
-    const { chatName, message, type } = sendRequest;
+    const { chatName, message, type, disableWebPagePreview: webPagePreview } = sendRequest;
     const chat = chats.getByName(chatName);
     if (!chat) {
         console.log("Unknown chat: " + chatName);
         return;
     }
-    if (type === 'MARKDOWN') {
-        Katya.sendMarkDown(chat.id, message);
-    } else {
-        Katya.sendText(chat.id, message);
-    }
+    Katya.sendText(chat.id, message, type, webPagePreview);
 }
 
 module.exports.send = asyncHandler(async (req, res, next) => {

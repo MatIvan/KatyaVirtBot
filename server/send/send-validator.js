@@ -15,6 +15,7 @@ function validSendRequest(body) {
         chatName: validChatName(body['chatName']),
         message: validMessage(body['message']),
         type: validType(body['type']),
+        disableWebPagePreview: validWebPagePreview(body['disableWebPagePreview'])
     }
 }
 
@@ -62,6 +63,20 @@ function validType(type) {
     }
     // @ts-ignore
     return type;
+}
+
+/**
+ * @param {any} disableWebPagePreview
+ * @returns {boolean}
+ */
+function validWebPagePreview(disableWebPagePreview) {
+    if (typeof disableWebPagePreview === 'undefined') {
+        return false;
+    }
+    if (typeof disableWebPagePreview !== 'boolean') {
+        throw new RestError('The "webPagePreview" parameter should be boolean', 400);
+    }
+    return disableWebPagePreview;
 }
 
 module.exports = {
